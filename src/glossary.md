@@ -211,6 +211,27 @@ r[glossary.uninhabited]
 
 A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is "empty" in the sense that there are no values of the type. The canonical example of an uninhabited type is the [never type] `!`, or an enum with no variants `enum Never { }`. Opposite of [Inhabited](#inhabited).
 
+r[glossary.zst]
+### Zero-sized tye
+
+A type is zero-sized (or a "ZST") if its values always have exactly 0 bytes. Such types have only one possible value. Examples include
+
+* the [unit type][type.tuple.unit]
+* [unit-like structs][items.struct.unit] which have no fields
+* [unions][items.union] of zero-sized types
+
+```rust
+#[derive(Copy, Clone)]
+struct Empty;
+union AlwaysEmpty {
+    f1: (),
+    f2: Empty,
+}
+assert_eq!(0, std::mem::size_of::<()>());
+assert_eq!(0, std::mem::size_of::<Empty>());
+assert_eq!(0, std::mem::size_of::<AlwaysEmpty>());
+```
+
 [`extern` blocks]: items.extern
 [`extern fn`]: items.fn.extern
 [alignment]: type-layout.md#size-and-alignment
