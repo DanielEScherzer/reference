@@ -200,6 +200,9 @@ r[layout.repr.c.struct]
 r[layout.repr.c.struct.align]
 The alignment of the struct is the alignment of the most-aligned field in it.
 
+r[layout.repr.c.struct.align-empty]
+Structs with no fields are guaranteed to have alignment of 1.
+
 r[layout.repr.c.struct.size-field-offset]
 The size and offset of fields is determined by the following algorithm.
 
@@ -249,8 +252,7 @@ impl UserStruct {
         // "The alignment of the struct is the alignment of the most-aligned
         // field in it."
         let max_alignment = fields.iter().map(|field| field.alignment).max();
-        // max_alignment is None iff there are no fields, in which case the
-        // overall alignment is 1 (the minimum).
+        // "Structs with no fields are guaranteed to have alignment of 1."
         let alignment = max_alignment.unwrap_or(1);
 
         // "Start with a current offset of 0 bytes."
