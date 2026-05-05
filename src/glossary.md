@@ -220,6 +220,7 @@ A type is zero sized (a ZST) if its size is 0. Such types have at most one possi
 - [Function items] (see [type.fn-item.intro]).
 - The constructors of [tuple-like structs] (see [type.fn-item.intro]).
 - The constructors of [tuple-like enum variants] (see [type.fn-item.intro]).
+- `repr(Rust)` [structs] with no fields or where all fields are zero-sized (see [layout.repr.rust.struct-zst]).
 - `repr(C)` [structs] with no fields or where all fields are zero-sized (see [layout.repr.c.struct.size-field-offset]).
 - `repr(transparent)` [structs] with no fields or where all fields are zero-sized (see [layout.repr.transparent.layout-abi]).
 - [Arrays] of zero-sized types (see [layout.array]).
@@ -231,6 +232,13 @@ A type is zero sized (a ZST) if its size is 0. Such types have at most one possi
 fn f() {}
 struct S(u8);
 enum E { V(u8) }
+struct UnitLike;
+struct NoFields {}
+struct OnlyZST {
+    f1: (),
+    f2: [(); 10],
+    f3: [u8; 0],
+}
 #[repr(C)]
 struct C1 {}
 #[repr(C)]
@@ -257,6 +265,9 @@ assert_eq!(0, size_of::<()>());
 assert_eq!(0, size_of_val(&f));
 assert_eq!(0, size_of_val(&S));
 assert_eq!(0, size_of_val(&E::V));
+assert_eq!(0, size_of::<UnitLike>());
+assert_eq!(0, size_of::<NoFields>());
+assert_eq!(0, size_of::<OnlyZST>());
 assert_eq!(0, size_of::<C1>());
 assert_eq!(0, size_of::<C2>());
 assert_eq!(0, size_of::<T1>());

@@ -180,6 +180,9 @@ For [structs], it is further guaranteed that the fields do not overlap. That is,
 
 Be aware that this guarantee does not imply that the fields have distinct addresses: [zero-sized types] may have the same address as other fields in the same struct.
 
+r[layout.repr.rust.struct-zst]
+For [structs] with no fields, or where all fields are [zero-sized], it is further guaranteed that the structs are themselves [zero-sized].
+
 r[layout.repr.rust.unspecified]
 There are no other guarantees of data layout made by this representation.
 
