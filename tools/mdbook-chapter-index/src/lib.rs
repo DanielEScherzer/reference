@@ -1,7 +1,7 @@
 //! Preprocessor to add chapter indices to chapter pages.
 
 use std::io;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use mdbook_preprocessor::book::{Book, BookItem, Chapter};
 use mdbook_preprocessor::config::Config;
@@ -61,7 +61,7 @@ impl ChapterHierarchy {
     /// The markdown list is nested four spaces for each level of `nesting`.
     ///
     /// Links to chapters are created relative to the provided `root`.
-    fn to_markdown_links(&self, nesting: usize, root: &PathBuf) -> String {
+    fn to_markdown_links(&self, nesting: usize, root: &Path) -> String {
         let current_indent = "    ".repeat(nesting);
         match self {
             ChapterHierarchy::Leaf(current_page) => {
@@ -170,6 +170,10 @@ impl ChapterIndices {
             // Draft chapter.
             return;
         };
+        let Some(root_directory) = root_path.parent() else {
+            // Something weird is going on...
+            return;
+        };
         if !chapter.content.contains(ADD_INDEX_MARKER) {
             return;
         }
@@ -181,7 +185,7 @@ impl ChapterIndices {
                 _ => None,
             })
             .filter_map(ChapterHierarchy::from_mdbook_chapter)
-            .map(|hierarchy| hierarchy.to_markdown_links(0, root_path))
+            .map(|hierarchy| hierarchy.to_markdown_links(0, root_directory))
             .collect();
         if !index.is_empty() {
             // Support for custom headings for different pages
