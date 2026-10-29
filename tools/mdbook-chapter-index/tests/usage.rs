@@ -73,8 +73,8 @@ fn add_index() {
     expected.content = concat!(
         "# Examples\n\n",
         "Chapter contents:\n",
-        "* [Foo](../Foo.md)\n",
-        "* [Bar](../Bar.md)\n"
+        "* [Foo](Foo.md)\n",
+        "* [Bar](Bar.md)\n"
     )
     .to_owned();
 
@@ -100,8 +100,8 @@ fn skip_draft() {
     expected.content = concat!(
         "# Examples\n\n",
         "Chapter contents:\n",
-        "* [Foo](../Foo.md)\n",
-        "* [Bar](../Bar.md)\n"
+        "* [Foo](Foo.md)\n",
+        "* [Bar](Bar.md)\n"
     )
     .to_owned();
 
@@ -153,11 +153,11 @@ fn nested_chapters() {
     expected.content = concat!(
         "# Examples\n\n",
         "Chapter contents:\n",
-        "* [Foo](../Foo.md)\n",
-        "* [Bar](../Bar.md)\n",
-        "* [Numbers](../Numbers.md):\n",
-        "    * [One](../One.md)\n",
-        "    * [Two](../Two.md)\n",
+        "* [Foo](Foo.md)\n",
+        "* [Bar](Bar.md)\n",
+        "* [Numbers](Numbers.md):\n",
+        "    * [One](One.md)\n",
+        "    * [Two](Two.md)\n",
     )
     .to_owned();
 
@@ -192,8 +192,8 @@ fn weird_paths() {
     expected.content = concat!(
         "# Examples\n\n",
         "Chapter contents:\n",
-        "* [Foo](../../../../some/absolute/path/Foo.md)\n",
-        "* [Bar](../../next-to-book/Bar.md)\n",
+        "* [Foo](../../../some/absolute/path/Foo.md)\n",
+        "* [Bar](../next-to-book/Bar.md)\n",
     )
     .to_owned();
 
@@ -218,8 +218,8 @@ fn custom_header() {
     expected.content = concat!(
         "# Examples\n\n",
         "Example pages:\n",
-        "* [Foo](../Foo.md)\n",
-        "* [Bar](../Bar.md)\n",
+        "* [Foo](Foo.md)\n",
+        "* [Bar](Bar.md)\n",
     )
     .to_owned();
 
@@ -258,8 +258,8 @@ fn different_headers() {
     expected_examples.content = concat!(
         "# Examples\n\n",
         "Example pages:\n",
-        "* [Foo](../Foo.md)\n",
-        "* [Bar](../Bar.md)\n",
+        "* [Foo](Foo.md)\n",
+        "* [Bar](Bar.md)\n",
     )
     .to_owned();
 
@@ -267,8 +267,8 @@ fn different_headers() {
     expected_numbers.content = concat!(
         "# Numbers\n\n",
         "Some numbers:\n",
-        "* [One](../One.md)\n",
-        "* [Two](../Two.md)\n",
+        "* [One](One.md)\n",
+        "* [Two](Two.md)\n",
     )
     .to_owned();
 
